@@ -1,24 +1,22 @@
 package com.zziafyc.wanandroid.http.subscriber;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.zziafyc.wanandroid.http.Exception.ApiException;
 import com.zziafyc.wanandroid.utils.NetworkHelper;
+import com.zziafyc.wanandroid.utils.ToastUtil;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.subscribers.ResourceSubscriber;
 
 /**
- * Created by chen on 2017/12/17.
+ * @作者 zziafyc
+ * @创建日期 2
+ * @description z采用rxjava2的背压策略
  */
-
-public abstract class LodeMoreObserverSubscriber<T> implements Observer<T> {
+public abstract class ApiSubscriberFlowable<T> extends ResourceSubscriber<T> {
     private Context context;
-    private Disposable disposable;
 
-    public LodeMoreObserverSubscriber(Context context) {
+    public ApiSubscriberFlowable(Context context) {
         this.context = context;
     }
 
@@ -34,23 +32,18 @@ public abstract class LodeMoreObserverSubscriber<T> implements Observer<T> {
     @Override
     public void onError(Throwable t) {
         if (!NetworkHelper.isNetworkAvailable(context)) {
-            Toast.makeText(context, "当前无网络连接，请先设置网络!", Toast.LENGTH_SHORT).show();
+            ToastUtil.showToast(context, "当前无网络连接，请先设置网络!");
         } else {
             ApiException.handleException(context, t);
-            Log.e("exception", "onError: " + t.getMessage());
-
+            ToastUtil.showToast(context, t.getMessage());
         }
-        disposable.dispose();
+        dispose();
     }
 
     @Override
     public void onComplete() {
-        disposable.dispose();
-    }
+        dispose();
 
-    @Override
-    public void onSubscribe(Disposable d) {
-        disposable = d;
     }
 
     /**

@@ -11,7 +11,7 @@ public interface MainActivityView extends BaseView {
     /**
      * 退出账号成功
      *
-     * @param boo
+     * @param success
      */
-    void onLogoutSuccess(Boolean boo);
+    void onLogOutSuccess(Boolean success);
 }

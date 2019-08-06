@@ -3,16 +3,10 @@ package com.zziafyc.wanandroid.mvp.presenter;
 import android.content.Context;
 
 import com.zziafyc.wanandroid.base.BasePresenter;
-import com.zziafyc.wanandroid.http.ApiScheduler;
-import com.zziafyc.wanandroid.http.Exception.FuncObservableException;
-import com.zziafyc.wanandroid.http.Exception.HandleFuc;
-import com.zziafyc.wanandroid.http.subscriber.LodeMoreObserverSubscriber;
+import com.zziafyc.wanandroid.http.ApiRetrofit;
+import com.zziafyc.wanandroid.http.subscriber.ApiSubscriberObserver;
 import com.zziafyc.wanandroid.mvp.model.ArticleModel;
-import com.zziafyc.wanandroid.mvp.model.BaseModel;
 import com.zziafyc.wanandroid.mvp.view.HomeFragmentView;
-
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 public class HomePresenter extends BasePresenter<HomeFragmentView> {
 
@@ -23,31 +17,12 @@ public class HomePresenter extends BasePresenter<HomeFragmentView> {
      * @param page
      */
     public void getHomeData(Context context, int page) {
-        mApiUtils.getArticleList(page)
-                .compose(ApiScheduler.getObservableScheduler())
-                .onErrorResumeNext(new FuncObservableException<>())
-                .subscribe(new Observer<BaseModel<ArticleModel>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(BaseModel<ArticleModel> model) {
-                        getView().onLoadSuccess(model.data);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
+        ApiRetrofit.setObservableSubscribe(mApiUtils.getArticleList(page), new ApiSubscriberObserver<ArticleModel>(context) {
+            @Override
+            public void onSuccess(ArticleModel articleModel) {
+                getView().onLoadSuccess(articleModel);
+            }
+        });
     }
 
     /**
@@ -57,17 +32,12 @@ public class HomePresenter extends BasePresenter<HomeFragmentView> {
      * @param page
      */
     public void getMoreData(Context context, int page) {
-
-        mApiUtils.getArticleList(page)
-                .compose(ApiScheduler.getObservableScheduler())
-                .onErrorResumeNext(new FuncObservableException<>())
-                .map(new HandleFuc<>())
-                .subscribe(new LodeMoreObserverSubscriber<ArticleModel>(context) {
-                    @Override
-                    public void onSuccess(ArticleModel articleModel) {
-                        getView().onLoadMoreSuccess(articleModel);
-                    }
-                });
+        ApiRetrofit.setObservableSubscribe(mApiUtils.getArticleList(page), new ApiSubscriberObserver<ArticleModel>(context) {
+            @Override
+            public void onSuccess(ArticleModel articleModel) {
+                getView().onLoadMoreSuccess(articleModel);
+            }
+        });
     }
 
     /**

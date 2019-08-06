@@ -27,4 +27,8 @@ public interface ApiUtils {
     @GET(UrlManager.ARTICLE_LIST)
     Observable<BaseModel<ArticleModel>> getArticleList(@Path("page") int page);
 
+    @Headers(WAN_HOST)
+    @GET(UrlManager.LOGOUT)
+    Observable<BaseModel> logout();
+
 }

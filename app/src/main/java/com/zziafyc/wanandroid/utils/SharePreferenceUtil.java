@@ -12,7 +12,6 @@ import com.zziafyc.wanandroid.App;
  */
 
 public class SharePreferenceUtil {
-    private static final String NAME = "Gank";
     private static Context context = App.getmContext();
     private static SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
 

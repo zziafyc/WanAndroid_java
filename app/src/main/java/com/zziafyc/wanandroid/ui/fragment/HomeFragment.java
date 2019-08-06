@@ -6,11 +6,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.zziafyc.wanandroid.R;
 import com.zziafyc.wanandroid.adapter.ArticleAdapter;
 import com.zziafyc.wanandroid.base.BaseFragment;
 import com.zziafyc.wanandroid.base.factory.CreatePresenter;
+import com.zziafyc.wanandroid.common.Arouter.RouterUrlManager;
 import com.zziafyc.wanandroid.mvp.model.ArticleListModel;
 import com.zziafyc.wanandroid.mvp.model.ArticleModel;
 import com.zziafyc.wanandroid.mvp.presenter.HomePresenter;
@@ -21,6 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 
 @CreatePresenter(HomePresenter.class)
+@Route(path = RouterUrlManager.FRAGMENT_HOME)
 public class HomeFragment extends BaseFragment<HomeFragmentView, HomePresenter> implements HomeFragmentView {
     @BindView(R.id.rv_main)
     RecyclerView mRecyclerView;
@@ -94,3 +97,4 @@ public class HomeFragment extends BaseFragment<HomeFragmentView, HomePresenter> 
         return true;
     }
 }
+

@@ -9,6 +9,9 @@ import com.zziafyc.wanandroid.base.factory.PresenterFactoryImpl;
 import com.zziafyc.wanandroid.base.proxy.IPresenterProxy;
 import com.zziafyc.wanandroid.base.proxy.PresenterProxyImpl;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * @作者 zziafyc
  * @创建日期 2019/7/28
@@ -21,6 +24,7 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     private String TAG = this.getClass().getName();
     private PresenterProxyImpl<V, P> mPresenterProxy = new PresenterProxyImpl<>
             (PresenterFactoryImpl.<V, P>createFactory(getClass()));
+    private Unbinder mUnbinder;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -39,6 +43,7 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
             setContentView(getLayoutId());
         }
         mPresenterProxy.onCreate((V) this);
+        mUnbinder = ButterKnife.bind(this);
         initView();
         initData(savedInstanceState);
     }
@@ -64,6 +69,7 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     protected void onDestroy() {
         super.onDestroy();
         mPresenterProxy.onDestroy();
+        mUnbinder.unbind();
     }
 
 }

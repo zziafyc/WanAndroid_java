@@ -66,7 +66,7 @@ public class ApiRetrofit {
         return addQueryParameterInterceptor;
     }
 
-    private Interceptor setheaderinterceptor() {
+    private Interceptor setHeaderInterceptor() {
         Interceptor headerInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
@@ -113,13 +113,12 @@ public class ApiRetrofit {
                 //错误重连
                 .retryOnConnectionFailure(true)
 //                .addInterceptor(setPublicParameterInterceptor())
-                .addInterceptor(setheaderinterceptor())
+                .addInterceptor(setHeaderInterceptor())
                 .addInterceptor(new BaseUrlInterceptor())
                 .addInterceptor(new LoggingInterceptor())
 //                .addNetworkInterceptor(rewriteCacheControlInterceptor)
                 .addInterceptor(rewriteCacheControlInterceptor)
                 .addInterceptor(new AddCookiesInterceptor())
-
                 .cache(cache).build();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -156,7 +155,6 @@ public class ApiRetrofit {
                 } else if ("wan".equals(headerValue)) {
                     newBaseUrl = HttpUrl.parse(BASE_WAN_URL);
                 } else {
-
                     newBaseUrl = oldHttpUrl;
                 }
                 //重建新的HttpUrl，修改需要修改的url部分

@@ -3,6 +3,8 @@ package com.zziafyc.wanandroid.utils;
 
 import android.util.Log;
 
+import com.zziafyc.wanandroid.BuildConfig;
+
 /**
  * @作者 zziafyc
  * @创建日期 2019/7/28
@@ -14,6 +16,10 @@ public class LogUtil {
     public static boolean isDebug = true;
 
     private final static String APP_TAG = "wanandroid";
+
+    public LogUtil() {
+        isDebug = BuildConfig.DEBUG;
+    }
 
     /**
      * 获取相关数据:类名,方法名,行号等.用来定位行<br>
