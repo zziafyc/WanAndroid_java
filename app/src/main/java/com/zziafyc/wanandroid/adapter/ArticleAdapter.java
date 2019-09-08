@@ -2,6 +2,7 @@ package com.zziafyc.wanandroid.adapter;
 
 import android.support.annotation.NonNull;
 import android.text.Html;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -27,6 +28,17 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticleModel, BaseViewHolde
             helper.setImageResource(R.id.iv_like, R.drawable.ic_like);
         } else {
             helper.setImageResource(R.id.iv_like, R.drawable.ic_like_not);
+        }
+        if (item.getTop() == "1") {
+            helper.getView(R.id.tv_article_top).setVisibility(View.VISIBLE);
+        } else {
+            helper.getView(R.id.tv_article_top).setVisibility(View.GONE);
+        }
+        if (null != item.getTags() && item.getTags().size() > 0) {
+            helper.getView(R.id.tv_article_tag).setVisibility(View.VISIBLE);
+            helper.setText(R.id.tv_article_tag, item.getTags().get(0).getName());
+        } else {
+            helper.getView(R.id.tv_article_tag).setVisibility(View.GONE);
         }
 
     }

@@ -106,7 +106,6 @@ public class HomeFragment extends BaseFragment<HomeFragmentView, HomePresenter> 
 
     @Override
     public void onLoadMoreSuccess(ArticleListModel articleModel) {
-        Toast.makeText(getActivity(), "加载更多数据啦！！", Toast.LENGTH_SHORT).show();
         //加载更多成功后回调
         List<ArticleModel> moreArticleModel = articleModel.getDatas();
         super.onLoadMoreSuccess(moreArticleModel);

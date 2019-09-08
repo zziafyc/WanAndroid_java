@@ -1,6 +1,7 @@
 package com.zziafyc.wanandroid.http;
 
 import com.zziafyc.wanandroid.mvp.model.ArticleListModel;
+import com.zziafyc.wanandroid.mvp.model.ArticleModel;
 import com.zziafyc.wanandroid.mvp.model.BannerModel;
 import com.zziafyc.wanandroid.mvp.model.BaseModel;
 
@@ -28,6 +29,16 @@ public interface ApiUtils {
     @Headers(WAN_HOST)
     @GET(UrlManager.BANNER)
     Observable<BaseModel<ArrayList<BannerModel>>> getBanner();
+
+
+    /**
+     * 获取置顶文章
+     *
+     * @return
+     */
+    @Headers(WAN_HOST)
+    @GET(UrlManager.ARTICLE_LIST_top)
+    Observable<BaseModel<ArrayList<ArticleModel>>> getTopArticleList();
 
     /**
      * 首页文章列表

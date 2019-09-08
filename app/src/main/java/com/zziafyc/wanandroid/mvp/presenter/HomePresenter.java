@@ -9,11 +9,13 @@ import com.zziafyc.wanandroid.http.Exception.FuncObservableException;
 import com.zziafyc.wanandroid.http.Exception.HandleFuc;
 import com.zziafyc.wanandroid.http.subscriber.ApiSubscriberObserver;
 import com.zziafyc.wanandroid.mvp.model.ArticleListModel;
+import com.zziafyc.wanandroid.mvp.model.ArticleModel;
 import com.zziafyc.wanandroid.mvp.model.BannerModel;
 import com.zziafyc.wanandroid.mvp.model.HomeModel;
 import com.zziafyc.wanandroid.mvp.view.HomeFragmentView;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import io.reactivex.functions.BiFunction;
 
@@ -39,6 +41,24 @@ public class HomePresenter extends BasePresenter<HomeFragmentView> {
                             @Override
                             public HomeModel apply(ArrayList<BannerModel> bannerModels, ArticleListModel articleModel) throws Exception {
                                 return new HomeModel(bannerModels, articleModel);
+                            }
+                        }
+                )
+                .zipWith(mApiUtils.getTopArticleList()
+                                .compose(ApiScheduler.getObservableScheduler())
+                                .onErrorResumeNext(new FuncObservableException<>())
+                                .map(new HandleFuc<>())
+                        , new BiFunction<HomeModel, ArrayList<ArticleModel>, HomeModel>() {
+                            @Override
+                            public HomeModel apply(HomeModel homeModel, ArrayList<ArticleModel> topArticleModels) throws Exception {
+                                //添加置顶的一些文章
+                                if (null != topArticleModels && topArticleModels.size() > 0) {
+                                    for (ArticleModel articleModel : topArticleModels) {
+                                        articleModel.setTop("1");
+                                        homeModel.getArticleListModels().getDatas().add(0, articleModel);
+                                    }
+                                }
+                                return homeModel;
                             }
                         }
                 )

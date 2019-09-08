@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                    xmlns:tools="http://schemas.android.com/tools"
-                                    android:id="@+id/cardView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:clickable="true"
-                                    android:focusable="true"
-                                    android:foreground="?attr/selectableItemBackground"
-                                    app:cardBackgroundColor="@color/viewBackground"
-                                    app:cardCornerRadius="@dimen/dp_1"
-                                    app:cardElevation="@dimen/dp_1">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/viewBackground"
+    app:cardCornerRadius="@dimen/dp_1"
+    app:cardElevation="@dimen/dp_1">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:paddingTop="@dimen/item_content_padding"
         android:paddingRight="@dimen/item_content_padding"
         android:paddingBottom="@dimen/item_content_padding">
@@ -33,7 +34,7 @@
             android:textColor="@color/Red"
             android:textSize="@dimen/sp_10"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_article_fresh"
@@ -50,7 +51,7 @@
             android:textColor="@color/Red"
             android:textSize="@dimen/sp_10"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_article_tag"
@@ -67,7 +68,7 @@
             android:textSize="@dimen/sp_10"
             android:visibility="gone"
             tools:text="@string/app_name"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_article_author"
@@ -78,7 +79,7 @@
             android:layout_toRightOf="@+id/tv_article_tag"
             android:textColor="@color/item_author"
             android:textSize="@dimen/item_tv_author"
-            tools:text="zziafyc"/>
+            tools:text="zziafyc" />
 
         <TextView
             android:id="@+id/tv_article_date"
@@ -88,7 +89,7 @@
             android:layout_alignParentRight="true"
             android:textColor="@color/item_date"
             android:textSize="@dimen/item_tv_date"
-            tools:text="2019-07-30"/>
+            tools:text="2019-07-30" />
 
 
         <TextView
@@ -104,7 +105,7 @@
             android:maxLines="2"
             android:paddingBottom="@dimen/dp_6"
             android:textColor="@color/item_title"
-            android:textSize="@dimen/item_tv_title"/>
+            android:textSize="@dimen/item_tv_title" />
 
         <TextView
             android:id="@+id/tv_article_chapterName"
@@ -116,7 +117,7 @@
             android:gravity="center"
             android:textColor="@color/item_chapter"
             android:textSize="@dimen/item_tv_tag"
-            tools:text="@string/app_name"/>
+            tools:text="@string/app_name" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -129,10 +130,16 @@
                 android:id="@+id/iv_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_like_not"/>
+                app:srcCompat="@drawable/ic_like_not" />
 
         </LinearLayout>
 
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/color_DDDEE3" />
 
 </android.support.v7.widget.CardView>

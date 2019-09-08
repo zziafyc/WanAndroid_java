@@ -31,6 +31,10 @@ public class UrlManager {
      */
     public static final String ARTICLE_LIST = "article/list/{page}/json";
     /**
+     * 置顶文章列表
+     */
+    public static final String ARTICLE_LIST_top = "article/top/json";
+    /**
      * 收藏文章的列表
      */
     public static final String COLLECT_LIST = "lg/collect/list/{page}/json";

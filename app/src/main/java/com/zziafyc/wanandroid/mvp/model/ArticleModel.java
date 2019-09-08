@@ -1,5 +1,9 @@
 package com.zziafyc.wanandroid.mvp.model;
 
+import android.nfc.Tag;
+
+import java.util.List;
+
 /**
  * Creat by chen on 2018/10/17
  * Describe:
@@ -24,12 +28,13 @@ public class ArticleModel {
     private long publishTime;
     private int superChapterId;
     private String superChapterName;
-    //    private List<String> tags;
+    private List<TagModel> tags;
     private String title;
     private int type;
     private int userId;
     private int visible;
     private int zan;
+    private String top;
     /**
      * originId 代表的是你收藏之前的那篇文章本身的id； 但是收藏支持主动添加，这种情况下，没有originId则为-1
      */
@@ -218,5 +223,21 @@ public class ArticleModel {
 
     public void setZan(int zan) {
         this.zan = zan;
+    }
+
+    public String getTop() {
+        return top;
+    }
+
+    public void setTop(String top) {
+        this.top = top;
+    }
+
+    public List<TagModel> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<TagModel> tags) {
+        this.tags = tags;
     }
 }
