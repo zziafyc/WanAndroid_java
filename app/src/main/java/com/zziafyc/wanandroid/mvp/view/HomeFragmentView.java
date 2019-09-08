@@ -1,7 +1,8 @@
 package com.zziafyc.wanandroid.mvp.view;
 
 import com.zziafyc.wanandroid.base.BaseView;
-import com.zziafyc.wanandroid.mvp.model.ArticleModel;
+import com.zziafyc.wanandroid.mvp.model.ArticleListModel;
+import com.zziafyc.wanandroid.mvp.model.HomeModel;
 
 /**
  * @作者 zziafyc
@@ -13,16 +14,16 @@ public interface HomeFragmentView extends BaseView {
     /**
      * 数据加载成功
      *
-     * @param articleModel
+     * @param homeModel
      */
-    void onLoadSuccess(ArticleModel articleModel);
+    void onLoadSuccess(HomeModel homeModel);
 
     /**
      * 加载更多成功
      *
      * @param articleModel
      */
-    void onLoadMoreSuccess(ArticleModel articleModel);
+    void onLoadMoreSuccess(ArticleListModel articleModel);
 
     /**
      * 收藏成功

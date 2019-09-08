@@ -6,18 +6,18 @@ import android.text.Html;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zziafyc.wanandroid.R;
-import com.zziafyc.wanandroid.mvp.model.ArticleListModel;
+import com.zziafyc.wanandroid.mvp.model.ArticleModel;
 
 import java.util.List;
 
-public class ArticleAdapter extends BaseQuickAdapter<ArticleListModel, BaseViewHolder> {
+public class ArticleAdapter extends BaseQuickAdapter<ArticleModel, BaseViewHolder> {
 
-    public ArticleAdapter(List<ArticleListModel> data) {
+    public ArticleAdapter(List<ArticleModel> data) {
         super(R.layout.item_article, data);
     }
 
     @Override
-    protected void convert(@NonNull BaseViewHolder helper, ArticleListModel item) {
+    protected void convert(@NonNull BaseViewHolder helper, ArticleModel item) {
         helper.setText(R.id.tv_article_title, Html.fromHtml(item.getTitle()))
                 .setText(R.id.tv_article_author, item.getAuthor())
                 .setText(R.id.tv_article_date, item.getNiceDate())

@@ -6,7 +6,7 @@ import com.zziafyc.wanandroid.mvp.model.BaseModel;
 import io.reactivex.functions.Function;
 
 /**
- * Creat by chen on 2018/9/30
+ * Create by chen on 2018/9/30
  * Describe:
  *
  * @author chenbo

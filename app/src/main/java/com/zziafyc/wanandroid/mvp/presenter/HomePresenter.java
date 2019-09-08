@@ -4,9 +4,18 @@ import android.content.Context;
 
 import com.zziafyc.wanandroid.base.BasePresenter;
 import com.zziafyc.wanandroid.http.ApiRetrofit;
+import com.zziafyc.wanandroid.http.ApiScheduler;
+import com.zziafyc.wanandroid.http.Exception.FuncObservableException;
+import com.zziafyc.wanandroid.http.Exception.HandleFuc;
 import com.zziafyc.wanandroid.http.subscriber.ApiSubscriberObserver;
-import com.zziafyc.wanandroid.mvp.model.ArticleModel;
+import com.zziafyc.wanandroid.mvp.model.ArticleListModel;
+import com.zziafyc.wanandroid.mvp.model.BannerModel;
+import com.zziafyc.wanandroid.mvp.model.HomeModel;
 import com.zziafyc.wanandroid.mvp.view.HomeFragmentView;
+
+import java.util.ArrayList;
+
+import io.reactivex.functions.BiFunction;
 
 public class HomePresenter extends BasePresenter<HomeFragmentView> {
 
@@ -17,12 +26,28 @@ public class HomePresenter extends BasePresenter<HomeFragmentView> {
      * @param page
      */
     public void getHomeData(Context context, int page) {
-        ApiRetrofit.setObservableSubscribe(mApiUtils.getArticleList(page), new ApiSubscriberObserver<ArticleModel>(context) {
-            @Override
-            public void onSuccess(ArticleModel articleModel) {
-                getView().onLoadSuccess(articleModel);
-            }
-        });
+        // banner数据和文章列表数据
+        mApiUtils.getBanner()
+                .compose(ApiScheduler.getObservableScheduler())
+                .onErrorResumeNext(new FuncObservableException<>())
+                .map(new HandleFuc<>())
+                .zipWith(mApiUtils.getArticleList(page)
+                                .compose(ApiScheduler.getObservableScheduler())
+                                .onErrorResumeNext(new FuncObservableException<>())
+                                .map(new HandleFuc<>())
+                        , new BiFunction<ArrayList<BannerModel>, ArticleListModel, HomeModel>() {
+                            @Override
+                            public HomeModel apply(ArrayList<BannerModel> bannerModels, ArticleListModel articleModel) throws Exception {
+                                return new HomeModel(bannerModels, articleModel);
+                            }
+                        }
+                )
+                .subscribe(new ApiSubscriberObserver<HomeModel>(context) {
+                    @Override
+                    public void onSuccess(HomeModel homeModel) {
+                        getView().onLoadSuccess(homeModel);
+                    }
+                });
     }
 
     /**
@@ -32,9 +57,9 @@ public class HomePresenter extends BasePresenter<HomeFragmentView> {
      * @param page
      */
     public void getMoreData(Context context, int page) {
-        ApiRetrofit.setObservableSubscribe(mApiUtils.getArticleList(page), new ApiSubscriberObserver<ArticleModel>(context) {
+        ApiRetrofit.setObservableSubscribe(mApiUtils.getArticleList(page), new ApiSubscriberObserver<ArticleListModel>(context) {
             @Override
-            public void onSuccess(ArticleModel articleModel) {
+            public void onSuccess(ArticleListModel articleModel) {
                 getView().onLoadMoreSuccess(articleModel);
             }
         });

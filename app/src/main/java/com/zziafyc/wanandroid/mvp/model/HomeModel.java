@@ -8,9 +8,9 @@ import java.util.ArrayList;
 public class HomeModel {
 
     private ArrayList<BannerModel> bannerModels;
-    private ArticleModel articleListModels;
+    private ArticleListModel articleListModels;
 
-    public HomeModel(ArrayList<BannerModel> bannerModels, ArticleModel articleListModels) {
+    public HomeModel(ArrayList<BannerModel> bannerModels, ArticleListModel articleListModels) {
         this.bannerModels = bannerModels;
         this.articleListModels = articleListModels;
     }
@@ -19,7 +19,7 @@ public class HomeModel {
         return bannerModels;
     }
 
-    public ArticleModel getArticleListModels() {
+    public ArticleListModel getArticleListModels() {
         return articleListModels;
     }
 

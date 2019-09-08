@@ -4,20 +4,27 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.zhouwei.mzbanner.MZBannerView;
+import com.zhouwei.mzbanner.holder.MZHolderCreator;
 import com.zziafyc.wanandroid.R;
 import com.zziafyc.wanandroid.adapter.ArticleAdapter;
+import com.zziafyc.wanandroid.adapter.viewholder.BannerViewHolder;
 import com.zziafyc.wanandroid.base.BaseFragment;
 import com.zziafyc.wanandroid.base.factory.CreatePresenter;
 import com.zziafyc.wanandroid.common.Arouter.RouterUrlManager;
-import com.zziafyc.wanandroid.mvp.model.ArticleListModel;
 import com.zziafyc.wanandroid.mvp.model.ArticleModel;
+import com.zziafyc.wanandroid.mvp.model.ArticleListModel;
+import com.zziafyc.wanandroid.mvp.model.BannerModel;
+import com.zziafyc.wanandroid.mvp.model.HomeModel;
 import com.zziafyc.wanandroid.mvp.presenter.HomePresenter;
 import com.zziafyc.wanandroid.mvp.view.HomeFragmentView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,7 +35,9 @@ public class HomeFragment extends BaseFragment<HomeFragmentView, HomePresenter> 
     @BindView(R.id.rv_main)
     RecyclerView mRecyclerView;
     private ArticleAdapter mAdapter;
-    private List<ArticleListModel> articleListModels;
+    private List<ArticleModel> mArticleModels;
+    private MZBannerView<BannerModel> mBannerView;
+    private List<BannerModel> mBannerModelList = new ArrayList<>();
 
     @Override
     public int getLayoutId() {
@@ -38,14 +47,16 @@ public class HomeFragment extends BaseFragment<HomeFragmentView, HomePresenter> 
     @Override
     public void initView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new ArticleAdapter(articleListModels);
+        mAdapter = new ArticleAdapter(mArticleModels);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             Bundle bundle = new Bundle();
-            bundle.putString("weburl", ((ArticleListModel) adapter.getData().get(position)).getLink());
-            bundle.putString("title", ((ArticleListModel) (adapter.getData().get(position))).getTitle());
-            Toast.makeText(getActivity(), ((ArticleListModel) (adapter.getData().get(position))).getTitle(), Toast.LENGTH_SHORT).show();
+            bundle.putString("weburl", ((ArticleModel) adapter.getData().get(position)).getLink());
+            bundle.putString("title", ((ArticleModel) (adapter.getData().get(position))).getTitle());
         });
+        View headView = getLayoutInflater().inflate(R.layout.banner, null);
+        mBannerView = headView.findViewById(R.id.banner);
+        mAdapter.addHeaderView(headView);
 
     }
 
@@ -53,15 +64,37 @@ public class HomeFragment extends BaseFragment<HomeFragmentView, HomePresenter> 
     public void initData(@Nullable Bundle savedInstanceState) {
         getPresenter().getHomeData(getActivity(), currentPage);
 
+
     }
 
     @Override
-    public void onLoadSuccess(ArticleModel articleModel) {
-        Toast.makeText(getActivity(), "数据加载成功啦！！", Toast.LENGTH_SHORT).show();
+    public void onLoadSuccess(HomeModel homeModel) {
         //数据加载成功后回调
-        articleListModels = articleModel.getDatas();
-        super.onLoadSuccess(articleListModels);
-        mAdapter.setNewData(articleListModels);
+        mArticleModels = homeModel.getArticleListModels().getDatas();
+        super.onLoadSuccess(mArticleModels);
+        mAdapter.setNewData(mArticleModels);
+        //展示轮播图
+        mBannerModelList.clear();
+        mBannerModelList.addAll(homeModel.getBannerModels());
+        mBannerView.setPages(mBannerModelList, new MZHolderCreator<BannerViewHolder>() {
+            @Override
+            public BannerViewHolder createViewHolder() {
+                return new BannerViewHolder();
+            }
+        });
+        mBannerView.start();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mBannerView.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mBannerView.pause();//暂停轮播
 
     }
 
@@ -72,12 +105,12 @@ public class HomeFragment extends BaseFragment<HomeFragmentView, HomePresenter> 
     }
 
     @Override
-    public void onLoadMoreSuccess(ArticleModel articleModel) {
+    public void onLoadMoreSuccess(ArticleListModel articleModel) {
         Toast.makeText(getActivity(), "加载更多数据啦！！", Toast.LENGTH_SHORT).show();
         //加载更多成功后回调
-        List<ArticleListModel> moreArticleListModel = articleModel.getDatas();
-        super.onLoadMoreSuccess(moreArticleListModel);
-        mAdapter.addData(moreArticleListModel);
+        List<ArticleModel> moreArticleModel = articleModel.getDatas();
+        super.onLoadMoreSuccess(moreArticleModel);
+        mAdapter.addData(moreArticleModel);
     }
 
     @Override
