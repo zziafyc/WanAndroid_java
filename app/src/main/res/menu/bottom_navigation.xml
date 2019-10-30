@@ -5,31 +5,26 @@
         android:id="@+id/action_home"
         android:enabled="true"
         android:icon="@drawable/ic_tab_home"
-        android:title="@string/home"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/home" />
     <item
         android:id="@+id/action_knowledge_system"
         android:enabled="true"
         android:icon="@drawable/ic_tab_knowledge_system"
-        android:title="@string/knowledge_system"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/knowledge_system" />
     <item
         android:id="@+id/action_wechat"
         android:enabled="true"
         android:icon="@drawable/ic_tab_chapter"
-        android:title="@string/wechat"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/wechat" />
     <item
         android:id="@+id/action_navigation"
         android:enabled="true"
         android:icon="@drawable/ic_navigation"
-        android:title="@string/navigation"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/navigation" />
     <item
         android:id="@+id/action_project"
         android:enabled="true"
         android:icon="@drawable/ic_project"
-        android:title="@string/project"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/project" />
 
 </menu>

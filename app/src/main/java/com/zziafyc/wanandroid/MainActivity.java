@@ -66,7 +66,6 @@ public class MainActivity extends BaseActivity<MainActivityView, MainPresenter> 
         actionBarDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
         mNavigationView.setNavigationItemSelectedListener(this);
-        mNavigationView.setItemIconTintList(null);
         mBottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             switch (id) {
