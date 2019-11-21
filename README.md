@@ -1,5 +1,5 @@
 # WanAndroid_java
-###根据鸿洋大神提供的wanandroid api，编写一个属于自己wanandorid项目（java版）,更多版本请看[https://github.com/zziafyc][1]
+### 根据鸿洋大神提供的wanandroid api，编写一个属于自己wanandorid项目（java版）,更多版本请看[https://github.com/zziafyc][1]
 
 > 项目通过使用注解、工厂模式、代理模式、策略模式等，整体上解决代码冗余、内存泄露、Presenter生命周期以及数据存储问题，也是对mvp模式的高级抽象封装，喜欢mvp架构的小伙伴可以参考下（整个架构参考了 [刘镓旗的perfect-mvp][2]）。
 
